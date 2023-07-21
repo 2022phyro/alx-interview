@@ -4,34 +4,26 @@
 import re
 import sys
 
-ma1 = r'^(\d+\.\d+\.\d+\.\d+) -' 
-ma2 = r' \[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+)\]' 
-ma3 = r' "GET /projects/260 HTTP/1.1" (\d{3}) (\d+)$' 
-regex = ma1 + ma2 + ma3
-codes = [200, 301, 400, 401, 403, 404, 405, 500]
 
 
 def printf(codes, fsize):
 	"""Prints in the required format"""
 	print("File size: {}".format(fsize))
 	for k, v in sorted(codes.items()):
-		print("{}: {}".format(k, v))
-
-if __name__ == "__main__":
-	res = {}
-	fsize = 0
-	try:
-		for i, line in enumerate(sys.stdin, 1):
-			matches = re.match(regex, line)
-			if matches:
-				x = int(matches.group(3))
-				if x in res:
-					res[x] += 1
-				elif x in codes:
-					res[x] = 1
-					codes.remove(x)
-				fsize += int(matches.group(4))
+		if v != 0:
+			print("{}: {}".format(k, v))
+fsize = 0
+codes = {'200': 0, '301': 0, '400': 0,
+		'401': 0, '403': 0, '404': 0, '405': 0, '500': 0}
+try:
+	for i, line in enumerate(sys.stdin, 1):
+		vals = line.split()
+		if len(vals) > 3:
+			code = vals[-2]
+			if code in codes:
+				codes[code] += 1
+			fsize += int(vals[-1])
 			if i % 10 == 0:
-				printf(res, fsize)
-	except KeyboardInterrupt:
-		printf(res, fsize)
+				printf(codes, fsize)
+finally:
+	printf(codes, fsize)
