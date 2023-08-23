@@ -7,7 +7,7 @@ def makeChange(coins: list, total):
     to calculate the number of change needed for
     for a larger denomination"""
     result = 0
-    if total <= 0:
+    if total <= 0 or coins = []:
         return 0
     while True:
         x = max(coins)
