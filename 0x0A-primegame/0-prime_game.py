@@ -27,7 +27,7 @@ def isWinner(x, nums):
     maria = 0
     if x != len(nums):
         return None
-    if not nums or nums == [] or x == 0:
+    if not nums or nums == [] or x <= 0:
         return None
     for i in range(x):
         winner = play_turn(nums[i])
