@@ -8,6 +8,7 @@ def play_turn(x):
     turn = 'm'
     ben = 0
     maria = 0
+    winner = None
     if games == [1]:
         return 'ben'
     while games != []:
@@ -15,11 +16,14 @@ def play_turn(x):
         games = [_ for _ in games if _ % lowest != 0]
         if turn == 'm':
             maria += 1
+            winner = 'maria'
             turn = 'b'
         else:
+            winner = 'ben'
             turn = 'm'
             ben += 1
         if games == [1]:
+            return winner
             if ben > maria:
                 return 'ben'
             elif maria > ben:
