@@ -6,19 +6,26 @@ def play_turn(x):
     """Plays a certain number of turns"""
     games = [_ for _ in range(1, x + 1)]
     turn = 'm'
+    ben = 0
+    maria = 0
     if games == [1]:
         return 'ben'
     while games != []:
         lowest = games[1]
         games = [_ for _ in games if _ % lowest != 0]
         if turn == 'm':
-            winner = 'maria'
+            maria += 1
             turn = 'b'
         else:
-            winner = 'ben'
             turn = 'm'
+            ben += 1
         if games == [1]:
-            return winner
+            if ben > maria:
+                return 'ben'
+            elif maria > ben:
+                return 'maria'
+            else:
+                return None
 
 
 def isWinner(x, nums):
@@ -33,7 +40,7 @@ def isWinner(x, nums):
         winner = play_turn(nums[i])
         if winner == 'maria':
             maria += 1
-        else:
+        elif winner == 'ben':
             ben += 1
     if ben > maria:
         return "Ben"
