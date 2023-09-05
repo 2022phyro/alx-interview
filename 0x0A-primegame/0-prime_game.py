@@ -10,7 +10,7 @@ def play_turn(x):
         return 'ben'
     while games != []:
         lowest = games[1]
-        games = [_  for _ in games if _ % lowest != 0]
+        games = [_ for _ in games if _ % lowest != 0]
         if turn == 'm':
             winner = 'maria'
             turn = 'b'
@@ -25,6 +25,8 @@ def isWinner(x, nums):
     """Finds the winner in a number of turns"""
     ben = 0
     maria = 0
+    if x != len(nums):
+        return None
     for i in range(x):
         winner = play_turn(nums[i])
         if winner == 'maria':
@@ -33,4 +35,6 @@ def isWinner(x, nums):
             ben += 1
     if ben > maria:
         return "Ben"
-    return "Maria"
+    if maria > ben:
+        return "Maria"
+    return None
